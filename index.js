@@ -21,4 +21,5 @@ mongoose
     console.log("MongoDb Connect");
     return server.listen({ port: PORT });
   })
-  .then((res) => console.log(`Server listen at ${res.url}`));
+  .then((res) => console.log(`Server listen at ${res.url}`))
+  .catch((err) => console.log(err));
