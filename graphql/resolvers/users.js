@@ -15,6 +15,7 @@ const getToken = (user) => {
       id: user._id,
       email: user.email,
       username: user.username,
+      avatar: user.avatar,
     },
     SECRET_KEY,
     { expiresIn: "1h" }
@@ -51,7 +52,13 @@ module.exports = {
       };
     },
     async register(parent, args, context, info) {
-      let { username, password, email, confirmPassword } = args.registerInput;
+      let {
+        username,
+        password,
+        email,
+        confirmPassword,
+        avatar,
+      } = args.registerInput;
       // Validate user data
       const { valid, errors } = registerInputValidator(
         email,
@@ -64,6 +71,7 @@ module.exports = {
           errors,
         });
       }
+
       // Make sure user doesnt already exists
       const user = await User.findOne({ username });
       if (user) {
@@ -73,6 +81,11 @@ module.exports = {
           },
         });
       }
+
+      if (avatar === "") {
+        avatar = "https://react.semantic-ui.com/images/avatar/large/molly.png";
+      }
+
       // Hash password and create auth token
 
       password = await bcrypt.hash(password, 12);
@@ -82,8 +95,10 @@ module.exports = {
         email,
         password,
         createdAt: new Date().toISOString(),
+        avatar,
       });
       const res = await newUser.save();
+      console.log(res._doc);
 
       const token = getToken(res);
 

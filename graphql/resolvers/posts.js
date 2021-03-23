@@ -33,11 +33,13 @@ module.exports = {
       if (body.trim() === "") {
         throw new Error("El cuerpo del Post no debe estar vacío.");
       }
-
       const newPost = new Post({
         body,
         user: user.indexOf,
         username: user.username,
+        userAvatar: user.avatar
+          ? user.avatar
+          : "https://react.semantic-ui.com/images/avatar/large/molly.png",
         createdAt: new Date().toISOString(),
       });
 

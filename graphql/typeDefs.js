@@ -5,6 +5,7 @@ const typeDefs = gql`
     id: ID!
     body: String!
     username: String!
+    userAvatar: String!
     createdAt: String!
     comments: [Comment]!
     likes: [Like]!
@@ -16,6 +17,7 @@ const typeDefs = gql`
     username: String!
     createdAt: String!
     body: String!
+    userAvatar: String!
   }
   type Like {
     id: ID!
@@ -28,12 +30,14 @@ const typeDefs = gql`
     token: String!
     email: String!
     createdAt: String!
+    avatar: String!
   }
   input RegisterInput {
     username: String!
     password: String!
     confirmPassword: String!
     email: String!
+    avatar: String!
   }
   type Query {
     getPosts: [Post]

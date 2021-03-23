@@ -6,7 +6,7 @@ const checkAuth = require("../../utils/check-auth");
 module.exports = {
   Mutation: {
     createComment: async (_, { postId, body }, context) => {
-      const { username } = checkAuth(context);
+      const { username, avatar } = checkAuth(context);
 
       if (body === "") {
         throw new UserInputError("El cuerpo del comentario está vacio", {
@@ -22,6 +22,7 @@ module.exports = {
         post.comments.unshift({
           body,
           username,
+          userAvatar: avatar,
           createdAt: new Date().toISOString(),
         });
 
